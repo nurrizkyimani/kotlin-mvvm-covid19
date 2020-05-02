@@ -13,7 +13,6 @@ object CovidDailyDataMapper {
 
     fun transform(responses: List<CovidDaily>?) = responses?.map { response ->
         DailyItem(
-            response.objectid,
             response.deltaConfirmed,
             response.deltaRecovered,
             response.mainlandChina,
@@ -60,4 +59,19 @@ object CovidDetailDataMapper {
             caseType
         )
     }.orEmpty()
+}
+
+object CovidDataMapper{
+
+    fun transformOverviewToUpdatedRegion(covidDetail: CovidDetail, covidOverview: CovidOverview) =  CovidDetail(
+        confirmed = covidOverview.confirmed?.value ?: 0,
+        deaths = covidOverview.deaths?.value ?: 0,
+        recovered = covidOverview.recovered?.value ?: 0,
+        countryRegion = covidDetail.countryRegion,
+        lastUpdate = covidDetail.lastUpdate,
+        lat = covidDetail.lat,
+        long = covidDetail.long,
+        iso2 = covidDetail.iso2,
+        provinceState = covidDetail.provinceState
+    )
 }
